@@ -4,27 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Percentage"
-        android:textSize="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/cpb_circlebar"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="전필"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/cpb_circlebar1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전선"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/cpb_circlebar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:text="교양"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/cpb_circlebar3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.dinuscxj.progressbar.CircleProgressBar
-        android:id="@+id/cpb_circlebar"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:progress_text_size="50sp"
+        android:id="@+id/cpb_circlebar1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progress_end_color="#ABF200"
+        app:progress_start_color="#FFBB00"
+        app:progress_stroke_cap="round"
+        app:progress_stroke_width="7dp "
+        app:progress_text_size="17sp"
+        app:style="solid_line" />
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/cpb_circlebar2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:progress_text_size="17sp"
         app:style="solid_line"
-        app:progress_stroke_width="20dp "
+        app:progress_stroke_width="7dp "
         app:progress_stroke_cap="round"
         app:progress_start_color="#FFBB00"
         app:progress_end_color="#ABF200"
@@ -32,6 +69,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/cpb_circlebar3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progress_end_color="#ABF200"
+        app:progress_start_color="#FFBB00"
+        app:progress_stroke_cap="round"
+        app:progress_stroke_width="7dp "
+        app:progress_text_size="17sp"
+        app:style="solid_line" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
