@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 // 대화창 아이콘 설정
                 alert.setIcon(R.drawable.common_google_signin_btn_icon_dark);
                 // 대화창 배경 색 설정
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(255,62,79,92)));
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(255, 62, 79, 92)));
                 alert.show();
             }
         });
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //구글로그인 인증을 요청했을 때 결과값을 되돌려받는 구문
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQ_SIGN_GOOGLE) {
+        if (requestCode == REQ_SIGN_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount(); //data가 다 담김
@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             Log.d("test", email);
                             if (email.equals("@ajou.ac.kr")) {
                                 FirebaseUser user = auth.getCurrentUser();
+                                new JSONTask().execute("https://7c7ecea6d8bd.ngrok.io/login");
 
                                 String cu = auth.getUid();
                                 String name = user.getDisplayName();
@@ -191,8 +192,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                                 UserData userData = new UserData(userEmail, name, cu);
                                 mDatabase.child("users").setValue(userData);
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(MainActivity.this, "아주대학교 계정이 아닙니다.", Toast.LENGTH_SHORT).show();
                                 signOut();
                             }
@@ -205,5 +205,81 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    public class JSONTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                FirebaseUser user = auth.getCurrentUser();
+                jsonObject.accumulate("userEmail", user.getEmail());
+                jsonObject.accumulate("name", user.getDisplayName());
+                jsonObject.accumulate("uid", auth.getUid());
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+
+                try {
+                    URL url = new URL("https://7c7ecea6d8bd.ngrok.io/login");
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close(); //버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            tvData.setText(result);//서버로 부터 받은 값을 출력해주는 부분
+        }
     }
 }
