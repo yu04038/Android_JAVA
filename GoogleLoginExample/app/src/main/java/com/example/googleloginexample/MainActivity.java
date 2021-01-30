@@ -5,14 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.AsyncQueryHandler;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -30,20 +33,41 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private SignInButton btn_google;
     private Button btn_logout;
+    private TextView tvData;
     private FirebaseAuth auth; //파이어베이스 인증 객체
     private GoogleApiClient googleApiClient;
     private static final int REQ_SIGN_GOOGLE = 100; //구글로그인 했을 때 결과 코드
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -64,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivityForResult(intent, REQ_SIGN_GOOGLE);
             }
         });
-
+        tvData = findViewById(R.id.tv_data);
         btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,11 +177,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             String email = account.getEmail().substring(account.getEmail().lastIndexOf("@"));
                             Log.d("test", email);
                             if (email.equals("@ajou.ac.kr")) {
+                                FirebaseUser user = auth.getCurrentUser();
+
+                                String cu = auth.getUid();
+                                String name = user.getDisplayName();
+                                String userEmail = user.getEmail();
+
                                 Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                                 intent.putExtra("nickName", account.getDisplayName());
                                 intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); //특정 자료형을 string형태로 전환
                                 startActivity(intent);
+
+                                UserData userData = new UserData(userEmail, name, cu);
+                                mDatabase.child("users").setValue(userData);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "아주대학교 계정이 아닙니다.", Toast.LENGTH_SHORT).show();
@@ -172,6 +205,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 }
