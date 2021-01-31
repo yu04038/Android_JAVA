@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JSONTask().execute("https://7c7ecea6d8bd.ngrok.io/login");
+                new JSONTask().execute("https://f93d745aa940.ngrok.io/test/lecture");
             }
         });
     }
@@ -41,15 +41,14 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("user_id", "androidTest");
-                jsonObject.accumulate("name", "yun");
-                jsonObject.accumulate("password", "joyongjin_solo");
+                jsonObject.accumulate("year", "2019");
+                jsonObject.accumulate("major", "미디어");
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
                 try {
-                    URL url = new URL("https://7c7ecea6d8bd.ngrok.io/login");
+                    URL url = new URL("https://f93d745aa940.ngrok.io/test/lecture");
                     con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");//POST방식으로 보냄

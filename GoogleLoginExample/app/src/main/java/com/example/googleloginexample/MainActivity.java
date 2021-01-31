@@ -178,17 +178,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             Log.d("test", email);
                             if (email.equals("@ajou.ac.kr")) {
                                 FirebaseUser user = auth.getCurrentUser();
-                                new JSONTask().execute("https://7c7ecea6d8bd.ngrok.io/login");
+                                new JSONTask().execute("https://f93d745aa940.ngrok.io/test//login");
 
                                 String cu = auth.getUid();
                                 String name = user.getDisplayName();
                                 String userEmail = user.getEmail();
 
                                 Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                                /*Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                                 intent.putExtra("nickName", account.getDisplayName());
                                 intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); //특정 자료형을 string형태로 전환
-                                startActivity(intent);
+                                startActivity(intent);*/
 
                                 UserData userData = new UserData(userEmail, name, cu);
                                 mDatabase.child("users").setValue(userData);
@@ -216,12 +216,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 jsonObject.accumulate("userEmail", user.getEmail());
                 jsonObject.accumulate("name", user.getDisplayName());
                 jsonObject.accumulate("uid", auth.getUid());
+                jsonObject.accumulate("year", "2019");
+                jsonObject.accumulate("major", "미디어학과");
+
+
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 
                 try {
-                    URL url = new URL("https://7c7ecea6d8bd.ngrok.io/login");
+                    URL url = new URL("https://f93d745aa940.ngrok.io/test//login");
                     con = (HttpURLConnection) url.openConnection();
 
                     con.setRequestMethod("POST");//POST방식으로 보냄
