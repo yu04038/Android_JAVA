@@ -185,10 +185,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 String userEmail = user.getEmail();
 
                                 Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                                /*Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                                 intent.putExtra("nickName", account.getDisplayName());
                                 intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); //특정 자료형을 string형태로 전환
-                                startActivity(intent);*/
+                                startActivity(intent);
 
                                 UserData userData = new UserData(userEmail, name, cu);
                                 mDatabase.child("users").setValue(userData);
