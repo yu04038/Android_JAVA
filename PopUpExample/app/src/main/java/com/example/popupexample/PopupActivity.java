@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-
-import org.w3c.dom.Text;
 
 public class PopupActivity extends Activity {
     TextView tv_text;
@@ -26,6 +25,13 @@ public class PopupActivity extends Activity {
         tv_text = (TextView) findViewById(R.id.tv_text);
 
         //데이터 가져오기
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("data");
+        tv_text.setText(data);
+    }
+
+    public void mOnClose(View v) {
+        //데이터 전달하기
         Intent intent = new Intent();
         intent.putExtra("result", "Close Popup");
         setResult(RESULT_OK, intent);
@@ -45,6 +51,7 @@ public class PopupActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        //안드로이드 백버튼 막기
         return;
     }
 }
