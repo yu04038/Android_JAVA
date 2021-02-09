@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!--margin, padding 적용 -->
+    <!--상하좌우에 여백이 전혀 없다.-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="margin, padding 적용 전"
+        android:textColor="#000000"
+        android:background="#ff77ff"/>
+
+    <!--padding만 적용한 예 -->
+    <!--TextView의 테두리로부터 text의 사이에 20dp의 여백을 가진다 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="padding만 적용한 예"
+        android:textColor="#000000"
+        android:background="#7777ff"/>
+
+    <!--margin만 적용한 예 -->
+    <!--부모 레이아웃과 TextView 위젯에 20dp의 여백이 생긴다 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="margin만 적용한 예"
+        android:textColor="#000000"
+        android:background="#ff7777"/>
+
+    <!--margin과 padding 모두 적용한 예-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:text="margin과 padding 모두 적용한 예"
+        android:textColor="#000000"
+        android:background="#77ffff"/>
+</LinearLayout>
