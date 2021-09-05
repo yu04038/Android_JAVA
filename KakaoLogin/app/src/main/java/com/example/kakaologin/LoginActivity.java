@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /**
-         * 로그인 버튼을 클릭했을 시 access token을 요청하도록 설정한다.
+         * 로그인 버튼을 클릭했을 시 access token을 요청하도록 설정한다!
          *
          * @param savedInstanceState 기존 session 정보가 저장된 객
          */

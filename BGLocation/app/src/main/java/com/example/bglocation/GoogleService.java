@@ -106,7 +106,6 @@ public class GoogleService extends Service implements LocationListener {
                         fn_update(location);
                     }
                 }
-
             }
 
 
@@ -124,16 +123,12 @@ public class GoogleService extends Service implements LocationListener {
                     }
                 }
             }
-
-
         }
-
     }
 
     private class TimerTaskToGetLocation extends TimerTask{
         @Override
         public void run() {
-
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
