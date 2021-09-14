@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_marginTop="200px"
+        android:layout_width="1000px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디로 사용될 이메일을 입력해주세요."
+            android:textColor="#000000"
+            android:textSize="54px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="본인인증을 위해 이메일 인증을 꼭 해주세요!"
+            android:textSize="40px"
+            android:layout_marginTop="20px"/>
+
+        <TextView
+            android:id="@+id/warningMessage"
+            android:layout_marginTop="20px"
+            android:textSize="37px"
+            android:textColor="#FF0000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_marginTop="40px"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:padding="30px"
+            android:textSize="47px"
+            android:hint="withme123@naver.com"
+            android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:text="이메일로 인증번호 받기"
+            android:layout_marginTop="20px"
+            android:backgroundTint="#E9E9E9"
+            android:textColor='#000000'
+            android:id="@+id/emailAuthentication"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20px"
+            android:id="@+id/layoutAuthenticate">
+
+            <EditText
+                android:layout_width="750px"
+                android:layout_height="140px"
+                android:inputType="textPersonName"
+                android:id="@+id/emailCodeText"
+                android:padding="30px"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/authenticate"
+                android:layout_marginLeft="50px"
+                android:layout_gravity="center"
+                android:layout_width="180px"
+                android:layout_height="140px"
+                android:text="인증"
+                android:textColor="#000000"
+                android:backgroundTint="#FED537"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
